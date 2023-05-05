@@ -47,7 +47,9 @@ const getRepoFileNames = (path: string = "") =>
 const getRepoInformation = () =>
   new Promise<GetRepoDetails>(async (res, rej) => {
     try {
-      const infoRaw = await fetch(`${BASE_URL}/${REPO_URL}`);
+      const infoRaw = await fetch(`${BASE_URL}/${REPO_URL}`, {
+        cache:"no-cache"
+      });
       const infoResults: GithubRepoResults = await infoRaw.json();
       const fileNames: File[] = await getRepoFileNames("");
 
@@ -66,7 +68,9 @@ const getRepoInformation = () =>
 const getFileInformation = (path: string) =>
   new Promise<GithubFileInformation>(async (res, rej) => {
     try {
-      const infoRaw = await fetch(path);
+      const infoRaw = await fetch(path, {
+        cache:"no-cache"
+      });
       const infoResults: GithubFileInformation = await infoRaw.json();
       const content = atob(infoResults.content);
       res({ ...infoResults, content });
@@ -79,6 +83,7 @@ const updateFileContent = (url: string, content: string) =>
   new Promise((resolve, reject) => {
     fetch(url, {
       headers,
+      cache:"no-cache"
     })
       .then((response) => response.json())
       .then((data) => {
@@ -102,6 +107,7 @@ const updateFileContent = (url: string, content: string) =>
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
+          cache:"no-cache"
         })
           .then((response) => response.json())
           .then((data) => {
@@ -114,7 +120,10 @@ const updateFileContent = (url: string, content: string) =>
 
 const deleteFileContent = (url: string) =>
   new Promise((resolve, reject) => {
-    fetch(url, { headers })
+    fetch(url, { 
+      headers,
+      cache:"no-cache"
+    })
       .then((response) => response.json())
       .then((data) => {
         // Get the current SHA of the file from the API response
@@ -134,6 +143,7 @@ const deleteFileContent = (url: string) =>
             "Content-Type": "application/json",
           },
           body: JSON.stringify(payload),
+          cache:"no-cache"
         })
           .then((response) => response.json())
           .then((data) => {
