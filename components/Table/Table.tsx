@@ -7,7 +7,7 @@ import { TableProps } from "./TableType";
 import { useStore } from "@/context/Store";
 
 const Table: React.FC<TableProps> = () => {
-  const { files } = useStore();
+  const { files, loading } = useStore();
   return (
     <div className="flex flex-col">
       <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -15,7 +15,7 @@ const Table: React.FC<TableProps> = () => {
           <div className="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
             <table className="min-w-full divide-y divide-gray-200">
               <TableHeader columns={["#", "File Name", "Action"]} />
-              <TableBody data={files || []} />
+              {loading ? <p>LOADING</p> : <TableBody data={files || []} />}
             </table>
           </div>
         </div>
