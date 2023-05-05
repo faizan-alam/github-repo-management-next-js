@@ -6,7 +6,7 @@ import { updateFileContent } from "@/services/api.service";
 const FileInformation: React.FC<{
   title?: string;
   data: string;
-  path: string;
+  path?: string;
 }> = ({ title, data, path }) => {
   const { setSelectedFile, setShowModal } = useStore();
   const [inputValue, setInputValue] = React.useState(data);
@@ -16,11 +16,12 @@ const FileInformation: React.FC<{
     [data, inputValue]
   );
 
-  React.useState(() => {
+  React.useEffect(() => {
     if (isValueChanged) setInputValue(data);
   }, [data]);
 
   const handleUpdateFileDetails = async () => {
+    if(!path) return; 
     const response = await updateFileContent(path, inputValue);
     setSelectedFile();
     setShowModal(false);

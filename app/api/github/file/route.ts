@@ -3,9 +3,9 @@ import {
   updateFileContent,
   deleteFileContent,
 } from "@/services/github.service";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Response, response: Response) {
+export async function GET(request: NextRequest, response: NextResponse) {
   try {
     const path = new URL(request?.url)?.searchParams?.get("path");
 
@@ -18,7 +18,7 @@ export async function GET(request: Response, response: Response) {
   }
 }
 
-export async function PUT(request: Response, response: Response) {
+export async function PUT(request: NextRequest, response: NextResponse) {
   try {
     const { path, content } = await request.json();
 
@@ -31,7 +31,7 @@ export async function PUT(request: Response, response: Response) {
   }
 }
 
-export async function DELETE(request: Response, response: Response) {
+export async function DELETE(request: NextRequest, response: NextResponse) {
   try {
     const path = new URL(request?.url)?.searchParams?.get("path");
 

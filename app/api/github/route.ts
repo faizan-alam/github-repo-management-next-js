@@ -1,7 +1,7 @@
 import { getRepoInformation } from "@/services/github.service";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request, response: Response) {
+export async function GET(request: NextRequest, response: NextResponse) {
   try {
     const repoResults = await getRepoInformation();
     return NextResponse.json(repoResults);
